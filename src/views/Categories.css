@@ -1,0 +1,7 @@
+.formGroupClass{
+    display: flex;
+    align-items: center;
+}
+.categoryInput{
+    width: 40%;
+}

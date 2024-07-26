@@ -1,0 +1,26 @@
+.viewmoreclass{
+    font-size: 14px !important;
+    color: #000 !important;
+}
+.customersDashCard{
+    background: linear-gradient(90deg, #ffbf96, #fe7096);
+}
+.merchantsDashCard{
+    background: linear-gradient(90deg, #90caf9, #047edf 99%)
+}
+.productsDashCard{
+    background: linear-gradient(90deg, #84d9d2, #07cdae);
+}
+.advertisementsDashCard{
+    background: linear-gradient(90deg, #f6e384, #ffd500);
+}
+.categoriesDashCard{
+    background: linear-gradient(90deg, #da8cff, #9a55ff);
+}
+.nciconsClass{
+    color: white;
+}
+.cardCategory{
+    color: #000 !important;
+    font-weight: 500 !important;
+}

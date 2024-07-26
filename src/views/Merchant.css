@@ -1,0 +1,68 @@
+th {
+    text-align: center !important;
+}
+td{
+    text-align: center;
+}
+.tableImageClass{
+    width: 100%;
+}
+.actionbuttondiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.actionbuttonclass{
+    margin-top: 2px !important;
+    margin-right: 2px;
+    width: 100%;
+}
+.actiontext{
+    margin-bottom: 0px !important;
+}
+.merchantNameLabel{
+    font-size: 22px;
+    font-weight: 700;
+}
+.prodmerchantName{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.merchantnametext{
+    font-size: 20px;
+}
+.editproductClass{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+}
+.editProductHeading{
+    margin-bottom: 0px !important;
+    margin-right: 6px;
+}
+.editproductText{
+    margin-bottom: 0px;
+}
+.editProductInput{
+    width: 80%;
+    padding-left: 18px;
+}
+.editProdInputClass{
+    position: relative;
+}
+.editProdRupee{
+    position: absolute;
+    left: 2%;
+    top: 30%;
+}
+.editProductDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.editProdImage{
+    width: 250px;
+}

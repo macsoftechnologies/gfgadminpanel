@@ -1,0 +1,18 @@
+.prodactclass{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.prodacttext{
+    margin-left: 3px;
+    margin-bottom: 0px !important;
+}
+.categoryNameClass{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.categoryIndicationClass{
+    margin-bottom: 0px !important;
+    margin-right: 10px;
+}
