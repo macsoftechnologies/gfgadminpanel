@@ -4,7 +4,7 @@ const Url=process.env.BaseUrl;
 
 export const loginadmin= async (email,password)=>{
     try{
-        const response = await axios.post(`https://gfg.org.in/admin/loginadmin`,{
+        const response = await axios.post(`https://api.gfg.org.in/admin/loginadmin`,{
             emailId:email,
             password:password
         });
@@ -24,7 +24,7 @@ export const getCustomer = async () => {
         }
       };
      const response = await axios.get(
-        "https://gfg.org.in/user/getuserslist",
+        "https://api.gfg.org.in/user/getuserslist",
         config
       );
   
@@ -47,7 +47,7 @@ export const getCustomer = async () => {
       
    
       const response = await axios.get(
-        "https://gfg.org.in/product/getproductslist",
+        "https://api.gfg.org.in/product/getproductslist",
         config
       );
   
@@ -65,7 +65,7 @@ export const getCustomer = async () => {
                 Authorization:`Bearer ${token}`
             }
         };
-        const respone=await axios.get("https://gfg.org.in/user/getmerchantslist",config);
+        const respone=await axios.get("https://api.gfg.org.in/user/getmerchantslist",config);
         return respone.data 
 
     }catch(error){
@@ -84,7 +84,7 @@ export const getCustomer = async () => {
         }
       };
       const response = await axios.get(
-        "https://gfg.org.in/user/getmerchantslist",
+        "https://api.gfg.org.in/user/getmerchantslist",
         config
       );
       return {
@@ -107,7 +107,7 @@ export const getCustomer = async () => {
         }
       };
       const response = await axios.get(
-        "https://gfg.org.in/user/getcustomerslist",
+        "https://api.gfg.org.in/user/getcustomerslist",
         config
       );
       return {
@@ -123,7 +123,7 @@ export const getCustomer = async () => {
   
    export const addCustomer=async(customerData)=>{
     try{
-    const response=await axios.post("https://gfg.org.in/user/customerregister",customerData)
+    const response=await axios.post("https://api.gfg.org.in/user/customerregister",customerData)
        return response;
 
     }catch(error){
@@ -141,7 +141,7 @@ export const getCustomer = async () => {
           Authorization: `Bearer ${token}`
         }
       }
-      const respone=await axios.post('https://gfg.org.in/user/deleteuser',userId,config)
+      const respone=await axios.post('https://api.gfg.org.in/user/deleteuser',userId,config)
       return respone.data;
     }catch(error){
       throw error;
@@ -151,7 +151,7 @@ export const getCustomer = async () => {
    
    export const addMerchant= async(merchantdata)=>{
     try{
-      const response=await axios.post('https://gfg.org.in/user/merchantregister',merchantdata)
+      const response=await axios.post('https://api.gfg.org.in/user/merchantregister',merchantdata)
       return response;
     }catch(error){
       throw error
@@ -169,7 +169,7 @@ export const getCustomer = async () => {
       }
     }
     console.log("config", config);
-    const response=await  axios.post('https://gfg.org.in/user/updateuser',updateData,config)
+    const response=await  axios.post('https://api.gfg.org.in/user/updateuser',updateData,config)
     return response;
     
     }catch(error){
@@ -186,7 +186,7 @@ export const getCustomer = async () => {
         'Content-Type': 'multipart/form-data'
       }
     }
-    const response =await axios.post('https://gfg.org.in/product/addproduct',formData,config)
+    const response =await axios.post('https://api.gfg.org.in/product/addproduct',formData,config)
     return response.data
     }catch(error){
       throw error
@@ -202,7 +202,7 @@ export const getCustomer = async () => {
         'Content-Type': 'multipart/form-data'
       }
     }
-    const response =await axios.post('https://gfg.org.in/product/updateproduct',formData,config)
+    const response =await axios.post('https://api.gfg.org.in/product/updateproduct',formData,config)
     return response;
     }catch(error){
       throw error
@@ -218,7 +218,7 @@ export const getCustomer = async () => {
         Authorization:`Bearer ${token}`
       }
     }
-    const response=await axios.post('https://gfg.org.in/product/getproductbyid',{ _id: productId },config)
+    const response=await axios.post('https://api.gfg.org.in/product/getproductbyid',{ _id: productId },config)
     return response
     }catch(error){
       throw error
@@ -233,7 +233,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-        const response=await axios.post('https://gfg.org.in/product/deleteproduct',productId,config)
+        const response=await axios.post('https://api.gfg.org.in/product/deleteproduct',productId,config)
         return response.data;
     }catch(error){
       throw error
@@ -248,7 +248,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-        const response=await axios.post('https://gfg.org.in/advertisements/addadvertisement',advertiseData,config)
+        const response=await axios.post('https://api.gfg.org.in/advertisements/addadvertisement',advertiseData,config)
         return response.data;
     }catch(error){
       throw error
@@ -263,7 +263,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-        const response=await axios.get('https://gfg.org.in/advertisements/getadvertisements',config)
+        const response=await axios.get('https://api.gfg.org.in/advertisements/getadvertisements',config)
         return response.data;
     }catch(error){
       throw error
@@ -278,7 +278,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-        const response=await axios.post('https://gfg.org.in/advertisements/editadvertisement',advertiseData,config)
+        const response=await axios.post('https://api.gfg.org.in/advertisements/editadvertisement',advertiseData,config)
         return response.data;
     }catch(error){
       throw error
@@ -293,7 +293,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-        const response=await axios.post('https://gfg.org.in/advertisements/deleteadvertisement',id,config)
+        const response=await axios.post('https://api.gfg.org.in/advertisements/deleteadvertisement',id,config)
         return response.data;
     }catch(error){
       throw error
@@ -308,7 +308,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-      const response = await axios.post("https://gfg.org.in/advertisements/deleteadvertisementfile", fileData, config );
+      const response = await axios.post("https://api.gfg.org.in/advertisements/deleteadvertisementfile", fileData, config );
       return response.data;
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -325,7 +325,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-      const response = await axios.post("https://gfg.org.in/product/getmerchantproducts", userId, config );
+      const response = await axios.post("https://api.gfg.org.in/product/getmerchantproducts", userId, config );
       return response.data;
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -335,7 +335,7 @@ export const getCustomer = async () => {
 
   export const getCategoriesList=async ()=>{
     try{
-        const respone=await axios.get("https://gfg.org.in/product/getcatogerieslist",);
+        const respone=await axios.get("https://api.gfg.org.in/product/getcatogerieslist",);
         return respone.data 
 
     }catch(error){
@@ -351,7 +351,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-        const response=await axios.post('https://gfg.org.in/product/deletecategory',categoryId,config)
+        const response=await axios.post('https://api.gfg.org.in/product/deletecategory',categoryId,config)
         return response.data;
     }catch(error){
       throw error
@@ -366,7 +366,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-    const response=await axios.post("https://gfg.org.in/product/addcategory",categoryData,config)
+    const response=await axios.post("https://api.gfg.org.in/product/addcategory",categoryData,config)
        return response;
 
     }catch(error){
@@ -383,7 +383,7 @@ export const getCustomer = async () => {
             Authorization:`Bearer ${token}`
           }
         }
-    const response=await axios.post("https://gfg.org.in/product/updatecategory",categoryData,config)
+    const response=await axios.post("https://api.gfg.org.in/product/updatecategory",categoryData,config)
        return response;
 
     }catch(error){
@@ -402,7 +402,7 @@ export const getCustomer = async () => {
         };
         
         const response = await axios.post(
-          "https://gfg.org.in/product/deletemerchantproduct",
+          "https://api.gfg.org.in/product/deletemerchantproduct",
           _id,
           config
         );
@@ -423,7 +423,7 @@ export const getCustomer = async () => {
         };
         
         const response = await axios.post(
-          "https://gfg.org.in/product/editmerchantproduct",
+          "https://api.gfg.org.in/product/editmerchantproduct",
           _id,
           config
         );

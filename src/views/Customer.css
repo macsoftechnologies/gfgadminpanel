@@ -1,9 +1,10 @@
 .actionbuttonclass1{
     margin-top: 2px !important;
-    margin-right: 2px;
-    width: 80%;
+    margin-right: 4px !important;
+    /* width: 80%; */
 }
 .tableImageClass1{
-    width: 100%;
+    width: 60%;
     border-radius: 20px;
+    height: 100px;
 }

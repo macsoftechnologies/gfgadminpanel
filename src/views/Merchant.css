@@ -4,13 +4,12 @@ th {
 td{
     text-align: center;
 }
-.tableImageClass{
-    width: 100%;
+.tabletdClass{
+    width: 100px;
+    height: 100px;
 }
-.actionbuttondiv{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.tableImageClass{
+    border-radius: 20px;
 }
 .actionbuttonclass{
     margin-top: 2px !important;
@@ -65,4 +64,7 @@ td{
 }
 .editProdImage{
     width: 250px;
+}
+.addingButtonClass{
+    background-color: #063263;
 }

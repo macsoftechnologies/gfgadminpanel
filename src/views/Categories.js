@@ -18,6 +18,9 @@ import {
   Row,
   Table,
   Form,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 import { addCategory } from "service/service";
 import { updateCategory } from "service/service";
@@ -37,7 +40,9 @@ function Categories() {
   const [data, setData] = useState({
     categoryName: "",
     categoryImage: null,
-  });
+  });  
+  const [searchQuery, setSearchQuery] = useState("");
+
 
   const getCategories = async () => {
     try {
@@ -58,6 +63,12 @@ function Categories() {
       getCategories();
     }
   }, []);
+
+  const filteredCategories = categories.filter((category) => {
+    const searchLower = searchQuery.toLowerCase();
+    const categoryLower = category.categoryName.toLowerCase();
+    return categoryLower.includes(searchLower);
+  });
 
   if (loading) {
     return (
@@ -220,8 +231,24 @@ function Categories() {
                   <Col>
                     <CardTitle tag="h4">Categories Table</CardTitle>
                   </Col>
+                  <Col>
+                    <InputGroup className="no-border">
+                      <Input
+                        placeholder="Search by category name..."
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>
+                          <i className="nc-icon nc-zoom-split" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
                   <Col className="text-right">
-                    <Button onClick={toggleAddModal}>Add Category</Button>
+                    <Button className="addingButtonClass" onClick={toggleAddModal}>Add Category</Button>
                   </Col>
                 </Row>
               </CardHeader>
@@ -236,15 +263,15 @@ function Categories() {
                     </tr>
                   </thead>
                   <tbody>
-                    {categories.map((category, index) => (
+                    {filteredCategories.map((category, index) => (
                       <tr key={category._id}>
                         <td>{index + 1}</td>
                         <td>{category.categoryName}</td>
                         <td>
                           <img
-                            src={`https://gfg.org.in/${category.categoryImage}`}
+                            src={`https://api.gfg.org.in/${category.categoryImage}`}
                             alt={category.categoryImage}
-                            width="100"
+                            className="categoryImageClass"
                           />
                         </td>
                         <td className="d-flex">
@@ -253,7 +280,7 @@ function Categories() {
                             onClick={() => handleEditClick(category)}
                           >
                             <div className="prodactclass">
-                              <FaEdit /> <p className="prodacttext">Edit</p>
+                              <FaEdit />
                             </div>
                           </Button>
                           <Button
@@ -261,7 +288,7 @@ function Categories() {
                             onClick={() => handleDeleteClick(category._id)}
                           >
                             <div className="prodactclass">
-                            <FaTrash /> <p className="prodacttext">Delete</p>
+                            <FaTrash />
                             </div>
                           </Button>
                         </td>
@@ -361,7 +388,7 @@ function Categories() {
             ) : (
               editCategory.categoryImage && (
                 <img
-                  src={`https://gfg.org.in/${editCategory.categoryImage}`}
+                  src={`https://api.gfg.org.in/${editCategory.categoryImage}`}
                   alt="Current Category"
                   width="100"
                   style={{ marginTop: "10px" }}

@@ -17,6 +17,9 @@ import {
   Form,
   CardImg,
   CardText,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 import {
   addProducts,
@@ -55,7 +58,8 @@ function Products() {
     productImage: "",
     categoryId: "",
     productSpecifications: [],
-  });
+  }); 
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchProducts = async () => {
     try {
@@ -85,6 +89,15 @@ function Products() {
     fetchCategoryList();
     fetchProducts();
   }, []);
+
+  const filteredProducts = products.filter((product) => {
+    const searchLower = searchQuery.toLowerCase();
+  
+    const productNameLower = product.productName?.toLowerCase() || '';
+    const categoryNameLower = product.categoryId?.[0]?.categoryName?.toLowerCase() || '';
+    
+    return productNameLower.includes(searchLower) || categoryNameLower.includes(searchLower);
+  });
 
   if (loading) {
     return (
@@ -366,8 +379,24 @@ function Products() {
                   <Col>
                     <CardTitle tag="h4">Products</CardTitle>
                   </Col>
+                  <Col>
+                    <InputGroup className="no-border">
+                      <Input
+                        placeholder="Search by category name..."
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>
+                          <i className="nc-icon nc-zoom-split" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
                   <Col className="text-right">
-                    <Button onClick={toggleModal}>Add Product</Button>
+                    <Button className="addingButtonClass" onClick={toggleModal}>Add Product</Button>
                   </Col>
                 </Row>
               </CardHeader>
@@ -383,15 +412,15 @@ function Products() {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product, index) => (
+                    {filteredProducts.map((product, index) => (
                       <tr key={product._id}>
                         <th>{index + 1}</th>
                         <td>{product.productName}</td>
                         <td>
                           <img
-                            src={`https://gfg.org.in/${product.productImage}`}
+                            src={`https://api.gfg.org.in/${product.productImage}`}
                             alt={product.productName}
-                            width="150"
+                            className="productImageClass"
                           />
                         </td>
                         <td>{product.categoryId[0]?.categoryName}</td>
@@ -402,7 +431,7 @@ function Products() {
                             onClick={() => viewProductDetails(product._id)}
                           >
                             <div className="prodactclass">
-                              <FaEye /> <p className="prodacttext">View</p>
+                              <FaEye />
                             </div>
                           </Button>
 
@@ -412,7 +441,7 @@ function Products() {
                             onClick={() => handleEditClick(product)}
                           >
                             <div className="prodactclass">
-                              <FaEdit /> <p className="prodacttext">Edit</p>
+                              <FaEdit />
                             </div>
                           </Button>
                           <Button
@@ -420,7 +449,7 @@ function Products() {
                             onClick={() => handleDeleteClick(product._id)}
                           >
                             <div className="prodactclass">
-                              <FaTrash /> <p className="prodacttext">Delete</p>
+                              <FaTrash />
                             </div>
                           </Button>
                         </td>
@@ -553,7 +582,7 @@ function Products() {
             <Card>
               <CardBody>
                 <CardImg
-                  src={`https://gfg.org.in/${selectedProduct.productImage}`}
+                  src={`https://api.gfg.org.in/${selectedProduct.productImage}`}
                   alt={selectedProduct.productName}
                 />
                 <CardTitle tag="h5">{selectedProduct.productName}</CardTitle>
@@ -629,7 +658,7 @@ function Products() {
                     ) : (
                       editProduct.productImage && (
                         <img
-                          src={`https://gfg.org.in/${editProduct.productImage}`}
+                          src={`https://api.gfg.org.in/${editProduct.productImage}`}
                           alt="Current Product"
                           width="100"
                           style={{ marginTop: "10px" }}

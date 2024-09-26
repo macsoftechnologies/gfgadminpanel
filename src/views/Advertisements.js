@@ -251,7 +251,7 @@ function Advertisements() {
                     <CardTitle tag="h4">Advertisements List</CardTitle>
                   </Col>
                   <Col className="text-right">
-                    <Button onClick={toggleModal}>Add Advertisement</Button>
+                    <Button className="addingButtonClass" onClick={toggleModal}>Add Advertisement</Button>
                   </Col>
                 </Row>
               </CardHeader>
@@ -276,13 +276,13 @@ function Advertisements() {
                                 {adImage.endsWith(".mp4") ? (
                                   <video
                                     className="adVideoClass"
-                                    src={`https://gfg.org.in/${adImage}`}
+                                    src={`https://api.gfg.org.in/${adImage}`}
                                     controls
                                   />
                                 ) : (
                                   <img
                                     className="adImageClass"
-                                    src={`https://gfg.org.in/${adImage}`}
+                                    src={`https://api.gfg.org.in/${adImage}`}
                                     alt={`Advertisement ${imgIndex + 1}`}
                                   />
                                 )}
@@ -291,22 +291,21 @@ function Advertisements() {
                           </Carousel>
                         </td>
                         <td>{advertisement.radius}</td>
-                        <td className="d-flex">
+                        <td className="advertiseActionsClass">
                           <Button
-                            color="success mt-5 mr-3"
-                            style={{ marginRight: "5px" }}
+                            color="success mr-3"
                             onClick={() => setSelectedAdvertisement(advertisement)}
                           >
                             <FaEye />
                           </Button>
                           <Button
-                            color="primary mt-5 mr-3"
+                            color="primary mr-3"
                             onClick={() => handleEditClick(advertisement)}
                           >
                             <FaEdit />
                           </Button>
                           <Button
-                            color="danger mt-5 mr-3"
+                            color="danger mr-3"
                             onClick={() => handleDeleteClick(advertisement._id)}
                           >
                             <FaTrash />
@@ -355,10 +354,10 @@ function Advertisements() {
                   {existingFiles.map((file, index) => (
                     <div key={index} className="position-relative">
                       {file.url.endsWith(".mp4") ? (
-                        <video src={`https://gfg.org.in/${file.url}`} controls className="adVideoClass" />
+                        <video src={`https://api.gfg.org.in/${file.url}`} controls className="adVideoClass" />
                       ) : (
                         <img
-                          src={`https://gfg.org.in/${file.url}`}
+                          src={`https://api.gfg.org.in/${file.url}`}
                           alt={`Selected file ${index + 1}`}
                           className="adImageClass"
                         />
@@ -424,13 +423,13 @@ function Advertisements() {
                           {adImage.endsWith(".mp4") ? (
                             <video
                               className="adViewVideoClass"
-                              src={`https://gfg.org.in/${adImage}`}
+                              src={`https://api.gfg.org.in/${adImage}`}
                               controls
                             />
                           ) : (
                             <img
                               className="adViewImageClass"
-                              src={`https://gfg.org.in/${adImage}`}
+                              src={`https://api.gfg.org.in/${adImage}`}
                               alt={`Advertisement ${imgIndex + 1}`}
                             />
                           )}

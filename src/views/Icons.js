@@ -53,7 +53,7 @@ function Icons() {
                         <td>{product.productName}</td>
                         <td>{product.userId.userName}</td>
                         <td><img
-                          src={`https://gfg.org.in/${product.productImage}`}
+                          src={`https://api.gfg.org.in/${product.productImage}`}
                           alt={product.productName}
                           width="150"
                         /></td>

@@ -16,6 +16,9 @@ import {
   Input,
   Form,
   ModalHeader,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,6 +53,8 @@ function Customer() {
     latitude: 0,
     longitude: 0,
   });
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -107,6 +112,12 @@ function Customer() {
       toast.error("Error: Unable to add Customer");
     }
   };
+
+  const filteredUsers = users.filter((user) => {
+    const searchLower = searchQuery.toLowerCase();
+    const addressLower = user.address.toLowerCase();
+    return addressLower.includes(searchLower);
+  });
 
   if (loading) {
     return (
@@ -239,8 +250,24 @@ function Customer() {
                   <Col>
                     <CardTitle tag="h4">Users Table</CardTitle>
                   </Col>
+                  <Col>
+                    <InputGroup className="no-border">
+                      <Input
+                        placeholder="Search by city, landmark, or pincode"
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>
+                          <i className="nc-icon nc-zoom-split" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
                   <Col className="text-right">
-                    <Button onClick={toggleModal}>Add Customer</Button>
+                    <Button className="addingButtonClass" onClick={toggleModal}>Add Customer</Button>
                   </Col>
                 </Row>
               </CardHeader>
@@ -257,7 +284,7 @@ function Customer() {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((user, index) => (
+                    {filteredUsers.map((user, index) => (
                       <tr key={user._id}>
                         <td>{index + 1}</td>
                         <td>{user.userName}</td>
@@ -265,7 +292,7 @@ function Customer() {
                         <td>
                           <img
                             className="tableImageClass1"
-                            src={`https://gfg.org.in/${user.profileImage}`}
+                            src={`https://api.gfg.org.in/${user.profileImage}`}
                             alt={user.profileImage}
                             width="100"
                           />
@@ -277,20 +304,14 @@ function Customer() {
                             className="actionbuttonclass1"
                             onClick={() => handleEditClick(user)}
                           >
-                            <div className="actionbuttondiv">
                               <FaEdit />
-                              <p className="actiontext">Edit</p>
-                            </div>
                           </Button>
                           <Button
                             color="danger"
                             className="actionbuttonclass1"
                             onClick={() => handleDeleteClick(user._id)}
                           >
-                            <div className="actionbuttondiv">
                               <FaTrash />
-                              <p className="actiontext">Delete</p>
-                            </div>
                           </Button>
                         </td>
                       </tr>
@@ -377,8 +398,12 @@ function Customer() {
               onPositionChange={handlePositionChange}
               apiKey="AIzaSyCiUU7Q5X1hTMRAJr0YJZPOxw40FfZcZp0"
             />
-            <Button color="secondary" onClick={toggleModal}>Close</Button>
-            <Button color="primary" type="submit">Submit</Button>
+            <Button color="secondary" onClick={toggleModal}>
+              Close
+            </Button>
+            <Button color="primary" type="submit">
+              Submit
+            </Button>
           </Form>
         </ModalBody>
       </Modal>
@@ -449,7 +474,7 @@ function Customer() {
                       ) : (
                         editUser.profileImage && (
                           <img
-                            src={`https://gfg.org.in/${editUser.profileImage}`}
+                            src={`https://api.gfg.org.in/${editUser.profileImage}`}
                             alt="Current Product"
                             width="100"
                             style={{ marginTop: "10px" }}
@@ -473,8 +498,12 @@ function Customer() {
             ) : (
               <div>Loading...</div> // Or any other fallback UI you prefer
             )}
-            <Button color="secondary" onClick={toggleEditModal}>Close</Button>
-            <Button color="primary" type="submit">Submit</Button>
+            <Button color="secondary" onClick={toggleEditModal}>
+              Close
+            </Button>
+            <Button color="primary" type="submit">
+              Submit
+            </Button>
           </Form>
         </ModalBody>
       </Modal>

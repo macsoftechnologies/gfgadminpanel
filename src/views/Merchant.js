@@ -17,6 +17,9 @@ import {
   Form,
   ModalHeader,
   Container,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -63,6 +66,8 @@ function Merchant() {
     longitude: 73.845,
   });
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -80,6 +85,12 @@ function Merchant() {
     };
     fetchdata();
   }, []);
+
+  const filteredUsers = users.filter((user) => {
+    const searchLower = searchQuery.toLowerCase();
+    const addressLower = user.address.toLowerCase();
+    return addressLower.includes(searchLower);
+  });
 
   if (loading) {
     return (
@@ -267,7 +278,7 @@ function Merchant() {
     setEditProduct({
       ...editProduct,
       _id: product?._id,
-      price: product?.price
+      price: product?.price,
     });
     setMerchantProductImage(product?.adminProductId[0]?.productImage);
     setMerchantProductName(product?.adminProductId[0]?.productName);
@@ -275,21 +286,24 @@ function Merchant() {
   };
 
   const handleProductEditSubmit = async () => {
-    try{
+    try {
       // console.log("merchantDetails", merchantDetails);
       const response = await editMerchantProduct(editProduct);
-      if(response && response.statusCode === 200 || response.statusCode === 201) {
+      if (
+        (response && response.statusCode === 200) ||
+        response.statusCode === 201
+      ) {
         toast.success(`Success: ${response.message}`);
         setTimeout(() => {
           refreshAfterEditProd(merchantDetails);
         }, 1000);
         toggleProductEditModal();
       }
-    } catch(error){
+    } catch (error) {
       console.log("error", error);
       toast.error("Error: Unable to edit merchantproduct");
     }
-  }
+  };
 
   const confirmProductDelete = async () => {
     try {
@@ -390,8 +404,24 @@ function Merchant() {
                   <Col>
                     <CardTitle tag="h4">Users Table</CardTitle>
                   </Col>
+                  <Col>
+                    <InputGroup className="no-border">
+                      <Input
+                        placeholder="Search by city, landmark, or pincode"
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        // style={{ marginBottom: "20px" }}
+                      />
+                      <InputGroupAddon addonType="append">
+                        <InputGroupText>
+                          <i className="nc-icon nc-zoom-split" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
                   <Col className="text-right">
-                    <Button onClick={toggleModal}>Add Merchant</Button>
+                    <Button className="addingButtonClass" onClick={toggleModal}>Add Merchant</Button>
                   </Col>
                 </Row>
               </CardHeader>
@@ -412,59 +442,52 @@ function Merchant() {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((user, index) => (
+                    {filteredUsers.map((user, index) => (
                       <tr key={user._id}>
                         <td>{index + 1}</td>
                         <td>{user.userName}</td>
                         <td>{user.address}</td>
                         <td>{user.mobileNumber}</td>
-                        <td>
+                        <td className="tabletdClass">
                           <img
                             className="tableImageClass"
-                            src={`https://gfg.org.in/${user.profileImage}`}
+                            src={`https://api.gfg.org.in/${user.profileImage}`}
                             alt={user.profileImage}
                             width="100"
+                            height='100'
                           />
                         </td>
                         <td>{user.shopName}</td>
-                        <td>
+                        <td className="tabletdClass">
                           <img
-                            className="tableImageClass"
-                            src={`https://gfg.org.in/${user.shopImage}`}
+                          className="tableImageClass"
+                            src={`https://api.gfg.org.in/${user.shopImage}`}
                             alt={user.shopImage}
                             width="100"
+                            height='100'
                           />
                         </td>
-                        <td>
+                        <td className="customerListActionClass">
                           <Button
                             color="success"
                             className="actionbuttonclass"
                             onClick={() => handleProductClick(user)}
                           >
-                            <div className="actionbuttondiv">
-                              <FaBox />
-                              <p className="actiontext">Products</p>
-                            </div>
+                            <FaBox />
                           </Button>
                           <Button
                             color="primary"
                             className="actionbuttonclass"
                             onClick={() => handleEditClick(user)}
                           >
-                            <div className="actionbuttondiv">
-                              <FaEdit />
-                              <p className="actiontext">Edit</p>
-                            </div>
+                            <FaEdit />
                           </Button>
                           <Button
                             color="danger"
                             className="actionbuttonclass"
                             onClick={() => handleDeleteClick(user._id)}
                           >
-                            <div className="actionbuttondiv">
-                              <FaTrash />
-                              <p className="actiontext">Delete</p>
-                            </div>
+                            <FaTrash />
                           </Button>
                         </td>
                       </tr>
@@ -668,7 +691,7 @@ function Merchant() {
                       ) : (
                         editUser.shopImage && (
                           <img
-                            src={`https://gfg.org.in/${editUser.shopImage}`}
+                            src={`https://api.gfg.org.in/${editUser.shopImage}`}
                             alt="Current Product"
                             width="100"
                             style={{ marginTop: "10px" }}
@@ -696,7 +719,7 @@ function Merchant() {
                       ) : (
                         editUser.profileImage && (
                           <img
-                            src={`https://gfg.org.in/${editUser.profileImage}`}
+                            src={`https://api.gfg.org.in/${editUser.profileImage}`}
                             alt="Current Product"
                             width="100"
                             style={{ marginTop: "10px" }}
@@ -720,8 +743,18 @@ function Merchant() {
             ) : (
               <div>Loading...</div> // Or any other fallback UI you prefer
             )}
-            <Button type="btn" color="secondary" onClick={() => toggleEditModal()}>Close</Button>
-            <Button color="primary" type="submit" onClick={()=>handleEditSubmit()}>
+            <Button
+              type="btn"
+              color="secondary"
+              onClick={() => toggleEditModal()}
+            >
+              Close
+            </Button>
+            <Button
+              color="primary"
+              type="submit"
+              onClick={() => handleEditSubmit()}
+            >
               Submit
             </Button>
           </Form>
@@ -778,13 +811,15 @@ function Merchant() {
                     <td>{product?.adminProductId[0]?.productName}</td>
                     <td>
                       <img
-                        src={`https://gfg.org.in/${product?.adminProductId[0]?.productImage}`}
+                        src={`https://api.gfg.org.in/${product?.adminProductId[0]?.productImage}`}
                         alt={product?.adminProductId[0]?.productImage}
                         width="100"
                       />
                     </td>
                     <td>
-                    <i class="fas fa-rupee-sign"></i>{product.price}</td>
+                      <i class="fas fa-rupee-sign"></i>
+                      {product.price}
+                    </td>
                     <td
                       style={{
                         display: "flex",
@@ -809,7 +844,13 @@ function Merchant() {
                 ))}
               </tbody>
             </Table>
-            <Button type="btn" color="secondary" onClick={() => toggleProductsModal()}>Close</Button>
+            <Button
+              type="btn"
+              color="secondary"
+              onClick={() => toggleProductsModal()}
+            >
+              Close
+            </Button>
           </CardBody>
         </Card>
       </Modal>
@@ -837,30 +878,29 @@ function Merchant() {
               <Col className="editProductDetails">
                 <div className="editproductClass">
                   <h6 className="editProductHeading">Product Name :</h6>
-                  <p className="editproductText">
-                    {merchantProductName}
-                  </p>
+                  <p className="editproductText">{merchantProductName}</p>
                 </div>
                 <div className="editproductClass">
                   <h6 className="editProductHeading">Price :</h6>
                   <div className="editProdInputClass">
-                  <i class="fas fa-rupee-sign editProdRupee"></i>
-                  <Input
-                    className="editProductInput"
-                    type="text"
-                    name="price"
-                    id="price"
-                    value={editProduct.price}
-                    onChange={handleChange}
-                  />
+                    <i class="fas fa-rupee-sign editProdRupee"></i>
+                    <Input
+                      className="editProductInput"
+                      type="text"
+                      name="price"
+                      id="price"
+                      value={editProduct.price}
+                      onChange={handleChange}
+                    />
                   </div>
                 </div>
               </Col>
               <Col>
                 <div className="editproductClass">
                   <h6 className="editProductHeading">Product Image :</h6>
-                  <img className="editProdImage"
-                    src={`https://gfg.org.in/${merchantProductImage}`}
+                  <img
+                    className="editProdImage"
+                    src={`https://api.gfg.org.in/${merchantProductImage}`}
                   />
                 </div>
               </Col>
@@ -868,8 +908,12 @@ function Merchant() {
           </Container>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={() => toggleProductEditModal()}>Cancel</Button>
-          <Button color="primary" onClick={() => handleProductEditSubmit()}>Submit</Button>
+          <Button color="secondary" onClick={() => toggleProductEditModal()}>
+            Cancel
+          </Button>
+          <Button color="primary" onClick={() => handleProductEditSubmit()}>
+            Submit
+          </Button>
         </ModalFooter>
       </Modal>
       {/* delete merchant product modal */}

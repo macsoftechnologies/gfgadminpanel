@@ -4,7 +4,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
-import './Sidebar.css'
+import './Sidebar.css';
+import gfg_logo from '../../assets/img/gfg_logo.png';
 
 // import logo from "logo.svg";
 
@@ -41,7 +42,8 @@ function Sidebar(props) {
           // href="https://www.creative-tim.com"
           className="simple-text logo-normal"
         >
-          GFG Online Services
+          {/* GFG Online Services */}
+          <img className="gfglogoclass" src={gfg_logo} alt="GFG LOGO" />
         </a>
       </div>
       <div className="sidebar-wrapper" ref={sidebar}>
